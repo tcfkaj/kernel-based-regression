@@ -27,7 +27,7 @@ For a given kernel, we refer to the n x n kernel matrix as `G`.
 robust models at the expense of predictive performance. Values too small will
 result in overfitting (or error in computation if extremely small).
 
-#### Output of `klm`
+##### Output of `klm`
 
 Outputs a list consisting of
 
@@ -50,7 +50,7 @@ Outputs a list consisting of
 set.
 * `train_model` - trained `klm`, trained on the training set.
 
-### Output of `predict.klm`
+##### Output of `predict.klm`
 
 Outputs a vector consisting of the predicted values of the test set.
 
