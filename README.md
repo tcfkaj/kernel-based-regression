@@ -29,7 +29,7 @@ result in overfitting (or error in computation if extremely small).
 
 ##### Output of `klm`
 
-Outputs a list consisting of
+Outputs a named list, which can be referenced with usual `$`, containing:
 
 * `$z` - the solution matrix
 * `$b` - a constant added to each variable, often referred to to b<sub>0</sub> in standard linear models. It is calculated as the negative mean of `G` x `z`.
@@ -67,6 +67,9 @@ or the size of data set.
 
 #### Output of `cv.klm`
 
+
+Outputs a named list, which can be referenced with usual `$`, containing:
+
 * `$train_mse` - list of training set mean squared errors, for each "fold".
 * `$test_mse` - list of test set mean squared errors, for each "fold".
 * `$train_rse` - square root of `train_mse`.
@@ -92,6 +95,8 @@ observations may not be used.
 or the size of data set.
 
 #### Output of `mccv.klm`
+
+Outputs a named list, which can be referenced with usual `$`, containing:
 
 * `$train_mse` - list of training set mean squared errors, for each "fold".
 * `$test_mse` - list of test set mean squared errors, for each "fold".
@@ -122,6 +127,8 @@ iteration.
 
 #### Output of `find_best_gamma`
 
+Outputs a named list, which can be referenced with usual `$`, containing:
+
 * `$train` - list of the mean training mse for each `gamma`.
 * `$test` - list of the mean test mse for each `gamma`.
 * `$best_mse` - test set mse for best `gamma`.
@@ -149,6 +156,9 @@ or the size of data set.
 * `cv_type` - `'cv'` (default) or `'mccv'`.
 
 #### Output of `find_best_lambda`
+
+Outputs a named list, which can be referenced with usual `$`, containing:
+
 
 * `$train` - list of the mean training mse for each `lambda`.
 * `$test` - list of the mean test mse for each `lambda`.
