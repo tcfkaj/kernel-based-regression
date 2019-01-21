@@ -89,7 +89,7 @@ mccv.klm <- function(G, y, lambda, cv=5){
 ## Find best gamma with fixed lambda
 
 find_best_gamma <- function(X, y, gammas, cv=5, lambda=1 ,
-				scale=FALSE, scale_lam=0.1, cv_type="cv"){
+				scale=TRUE, scale_lam=0.1, cv_type="cv"){
 		train = test = test_sds = train_rse = test_rse = c();
 		for (i in gammas){
 			print(paste("Gamma: ",i));
@@ -120,15 +120,11 @@ find_best_gamma <- function(X, y, gammas, cv=5, lambda=1 ,
 		return(output)
 }
 
-find_best_lambda <- function(X, y, lambdas, cv=5, gamma=1 ,
-				scale=FALSE, scale_lam=0.1, cv_type="cv"){
+find_best_lambda <- function(X, y, lambdas, cv=5, gamma=1 , cv_type="cv"){
 		train = test = test_sds = train_rse = test_rse = c();
+		G <- kernelMatrix(X, kernel=rbfdot(sigma=gamma));
 		for (i in lambdas){
 			print(paste("Lambda: ",i));
-			G <- kernelMatrix(X, kernel=rbfdot(sigma=gamma));
-			G_eig <- eigen(G)$values
-			lambda <- ifelse(!scale, lambda,
-					scale_lam * G_eig[1]);
 			if(cv_type=="mccv"){
 				model <- mccv.klm(G, y, lambda, cv=cv)}
 			else{
