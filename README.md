@@ -13,7 +13,7 @@ familiar with this package, and available kernels it provides.
 
 Suppose we have a dataset with n observations, k descriptors and 1 response
 variable. Then we have an n x 1 response vector, `Y` and an n x k descriptor
-matrix, `X`. It is recommended that `X` be normalized by column (by descriptor).
+matrix, `X`. It is recommended that `X` be normalized by column (by descriptor) and `Y` be shifted by its mean.
 
 For a given kernel, we refer to the n x n kernel matrix as `G`.
 
@@ -169,6 +169,73 @@ Outputs a named list, which can be referenced with usual `$`, containing:
 * `$train_rse` - list of mean training set `rse` for each `lambda`.
 * `$test_rse` - list of mean test set `rse` for each `lambda`.
 * `$test_sds` - list of mean test set `sd` for each `lambda`.
+
+### Examples
+
+```
+library(ISwR)
+
+X <- scale(bp.obese$obese)
+y <- bp.obese$bp - mean(bp.obese$bp)
+
+## Save ridge.R in pwd and include with source("filename")
+source("ridge.R")
+
+gammas <- c(0.00001, 0.0001, 0.001,
+	    0.005, 0.01, 0.05,
+	    0.1, 0.5, 2,
+	    5, 10, 50, 100, 1000)
+lambda=500
+ptm <- proc.time()
+best <- find_best_gamma(X, y, gammas, cv=20, lambda=lambda)
+
+## Vector containing mean training-set mse's for each gamma
+print("$train: ")
+best$train
+
+
+## Vector containing mean test-set mse's for each gamma
+print("$test: ")
+best$test
+
+## Vector containing mean test mse's for each gamma
+print("$best_mse: ")
+best$best_mse
+
+
+## Vector containing mean test rse=sqrt(mse) for each gamma
+print("$test_rse: ")
+best$rse
+
+
+## To get list of normalized test performance errors
+print("Normalized performance errors: ")
+best$test_rse/mean(bp.obese$bp)
+
+
+## Mean test-set rse for best gamma
+print("$best_rse: ")
+best$best_rse
+
+## To get performance of best gamma
+print("Best normalized performance error: ")
+best$best_rse/mean(bp.obese$bp)
+
+
+## Vector containing mean sd for each gamma
+print("$test_sd: ")
+best$test_sd
+
+## Sd of best gamma
+print("$best_sd: ")
+best$best_sd
+
+## Best gamma
+print("Best gamma: ")
+best$best_gamma
+
+proc.time() - ptm
+```
 
 ## Sources
 

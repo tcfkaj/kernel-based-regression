@@ -103,6 +103,7 @@ find_best_gamma <- function(X, y, gammas, cv=5, lambda=1 ,
 				model <- cv.klm(G, y, lambda, cv=cv)}
 			train <- c(train, mean(model$train_mse))
 			test <- c(test, mean(model$test_mse));
+			# print(test);
 			m.test_rse <- mean(model$test_rse)
 			m.train_rse <- mean(model$train_rse)
 			test_rse <- c(test_rse, m.test_rse)
@@ -148,59 +149,3 @@ find_best_lambda <- function(X, y, lambdas, cv=5, gamma=1 , cv_type="cv"){
 		return(output)
 }
 
-## Example code
-## Leave commented
-## Use this file with source("filename")
-## X is scaled predictor data
-## y is shifted response
-
-
-## source("ridge.R")
-
-## gammas <- c(0.00001, 0.0001, 0.001,
-## 		0.005, 0.01, 0.05,
-## 		0.1, 0.5, 2,
-## 		5, 10, 50, 100, 1000)
-## lambda=500
-
-## ptm <- proc.time()
-## best <- find_best_gamma(X, y, gammas, cv="LOOCV", lambda=lambda)
-
-## Vector containing mean training mse's for each gamma
-## best$train
-
-
-## Vector containing mean training mse's for each gamma
-## best$test
-
-## Vector containing mean test mse's for each gamma
-## best$best_mse
-
-
-## Vector containing mean test rse=sqrt(mse) for each gamma
-## best$rse
-
-
-## To get list of test performances
-## best$rse/mean(UnshiftedResponseData)
-
-
-## Vector containing mean test rse for best gamma
-## best$best_rse
-
-## To get performance of best gamma
-## best$best_rse/mean(UnshiftedResponseData)
-
-
-## Vector containing mean sd for each gamma
-## best$test_sd
-
-## Sd of best gamma
-## best$best_sd
-
-## Sd of best gamma
-## best$best_gamma
-
-## proc.time() - ptm
-##
-## save(gammas, lambda, best, file="bestgamma-L500.rda")
