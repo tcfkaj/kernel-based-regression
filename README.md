@@ -172,7 +172,7 @@ Outputs a named list, which can be referenced with usual `$`, containing:
 
 ### Examples
 
-```
+```R
 library(ISwR)
 
 X <- scale(bp.obese$obese)
