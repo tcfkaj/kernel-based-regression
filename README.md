@@ -1,6 +1,6 @@
 ## Introduction and Dependencies
 
-We define several functions to do a kernel-based ridge regression, and subsequent cross-validation. This is a technique for general non-linear regression using kernels. A complete treatment of the theory behind this can be found in Hastie, Tibshirani and Friedman (2016), specifically section 5.8. A linear kernel can be used for a generalized kernel-based linear regression. The only **dependency** is :
+We define several functions to do a kernel-based ridge regression, and subsequent cross-validation. This is a technique for general non-linear regression using kernels. A complete treatment of the theory behind this can be found in Hastie, Tibshirani and Friedman (2016), specifically section 5.8. A linear kernel can be used for a generalized kernel-based linear regression. However, even non-linear kernels map features to a linear function in Hilbert space, hence the name of the function `klm`. The only **dependency** is :
 
 * `kernlab` available in
 [CRAN](https://cran.r-project.org/web/packages/kernlab/index.html).
