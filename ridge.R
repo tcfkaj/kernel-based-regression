@@ -1,8 +1,7 @@
 library(kernlab, quietly=TRUE, warn.conflicts=FALSE)
 
 
-## Kernel-based ridge regression
-
+## Kernel-based regression
 klm <- function(G, y, lambda){
 		z <- solve(G + lambda * diag(length(y)), y)
 		b <- -mean(G %*% z);
@@ -15,11 +14,7 @@ klm <- function(G, y, lambda){
 }
 
 
-## Predict test set with:
-## G - full kernel matrix
-## test_samp - indices of test subset
-## train_model - model trained on train subset
-
+## Prediction on test set
 predict.klm <- function(G, test_samp, train_model){
 			G_test <- G[test_samp,-test_samp];
 			return(G_test %*% train_model$z + train_model$b)
@@ -27,8 +22,6 @@ predict.klm <- function(G, test_samp, train_model){
 
 
 ## Regular n-fold cross validation
-## cv="LOOCV" for Leave-one-out
-
 cv.klm <- function(G, y, lambda, cv=5){
 		train_mse = test_mse = preds =  c();
 		samp_size <- ifelse(cv=="LOOCV",1,floor(length(y)/cv));
@@ -58,7 +51,6 @@ cv.klm <- function(G, y, lambda, cv=5){
 
 
 ## Monte carlo cross-validation
-
 mccv.klm <- function(G, y, lambda, cv=5){
 		train_mse = test_mse = preds =  c();
 		samp_size <- floor(length(y)/cv);
@@ -86,17 +78,16 @@ mccv.klm <- function(G, y, lambda, cv=5){
 
 
 
-## Find best gamma with fixed lambda
-
+## Find best gamma with fixed lambda (or scale for eigenvalues)
 find_best_gamma <- function(X, y, gammas, cv=5, lambda=1 ,
-				scale=TRUE, scale_lam=0.1, cv_type="cv"){
+				scale=TRUE, scale_eig=0.1, cv_type="cv"){
 		train = test = test_sds = train_rse = test_rse = c();
 		for (i in gammas){
 			print(paste("Gamma: ",i));
 			G <- kernelMatrix(X, kernel=rbfdot(sigma=i));
 			G_eig <- eigen(G)$values
 			lambda <- ifelse(!scale, lambda,
-					scale_lam * G_eig[1]);
+					scale_eig * G_eig[1]);
 			if(cv_type=="mccv"){
 				model <- mccv.klm(G, y, lambda, cv=cv)}
 			else{
@@ -121,6 +112,7 @@ find_best_gamma <- function(X, y, gammas, cv=5, lambda=1 ,
 		return(output)
 }
 
+# Find best lambda with fixed gamma
 find_best_lambda <- function(X, y, lambdas, cv=5, gamma=1 , cv_type="cv"){
 		train = test = test_sds = train_rse = test_rse = c();
 		G <- kernelMatrix(X, kernel=rbfdot(sigma=gamma));

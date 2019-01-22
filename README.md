@@ -170,7 +170,7 @@ Outputs a named list, which can be referenced with usual `$`, containing:
 * `$test_rse` - list of mean test set `rse` for each `lambda`.
 * `$test_sds` - list of mean test set `sd` for each `lambda`.
 
-### Examples
+### Some example code
 
 ```R
 library(ISwR)
